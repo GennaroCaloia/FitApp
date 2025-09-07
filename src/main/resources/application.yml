@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: fitapp
+  profiles:
+    active: nodb
+
+---
+spring:
+  config:
+    activate:
+      on-profile: nodb
+# Esclude momentaneamente auto-configurazioni che richiedono un DB
+spring.autoconfigure.exclude:
+  - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  - org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
