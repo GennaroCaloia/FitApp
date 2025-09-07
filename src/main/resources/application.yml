@@ -9,11 +9,47 @@ spring:
   config:
     activate:
       on-profile: nodb
-# Esclude momentaneamente auto-configurazioni che richiedono un DB
+# Disabilita completamente il DB per avvio senza dipendenze
 spring.autoconfigure.exclude:
   - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
   - org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+# DB (Postgres nel compose)
+spring.datasource:
+  url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/fitapp}
+  username: ${SPRING_DATASOURCE_USERNAME:fitapp}
+  password: ${SPRING_DATASOURCE_PASSWORD:fitapp}
+  hikari:
+    maximum-pool-size: 5
+
+# JPA / Hibernate
+spring.jpa:
+  open-in-view: false
+  hibernate:
+    ddl-auto: none # usa Liquibase quando disponibile
+
+# Finchè non creo migration, rimane disabilitato Liquibase per 'dev'
+spring.liquibase.enabled: false
+
+# MinIO
+minio:
+  endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+  accessKey: ${MINIO_ACCESSKEY:minio}
+  secretKey: ${MINIO_SECRETKEY:minio123}
+  bucket: ${MINIO_BUCKET:fitapp-media}
+
 management:
   endpoints:
     web:

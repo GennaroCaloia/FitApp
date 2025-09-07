@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: fitapp-db
+    environment:
+      POSTGRES_DB: fitapp
+      POSTGRES_USER: fitapp
+      POSTGRES_PASSWORD: fitapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fitapp -d fitapp"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: fitapp-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # console
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # opzionale: app dentro compose (puoi anche avviare fuori)
+  app:
+    build: .
+    container_name: fitapp-app
+    depends_on:
+      db:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      # DB
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fitapp
+      SPRING_DATASOURCE_USERNAME: fitapp
+      SPRING_DATASOURCE_PASSWORD: fitapp
+      # MinIO
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESSKEY: minio
+      MINIO_SECRETKEY: minio123
+      MINIO_BUCKET: fitapp-media
+    ports:
+      - "8080:8080"
+
+volumes:
+  dbdata:
+  miniodata:
