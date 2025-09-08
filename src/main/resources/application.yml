@@ -9,6 +9,13 @@ spring:
   config:
     activate:
       on-profile: nodb
+
+security:
+  jwt:
+    issuer: fitapp
+    secret: ${JWT_SECRET:s3cUr3-JWT-53cr3t-84y7e5-9xPz1LmQvRtWuYj2}
+    ttlMinutes: 120
+
 # Disabilita completamente il DB per avvio senza dipendenze
 spring.autoconfigure.exclude:
   - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
@@ -18,13 +25,19 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,mapping
 
 ---
 spring:
   config:
     activate:
       on-profile: dev
+
+security:
+  jwt:
+    issuer: fitapp
+    secret: ${JWT_SECRET:s3cUr3-JWT-53cr3t-84y7e5-9xPz1LmQvRtWuYj2}
+    ttlMinutes: 120
 
 # DB (Postgres nel compose)
 spring.datasource:
