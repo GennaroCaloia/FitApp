@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
-@Profile("nodb")
+@Profile({"nodb", "dev"})
 public class InMemoryUsersConfig {
 
     @Bean

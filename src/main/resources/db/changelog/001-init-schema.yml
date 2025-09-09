@@ -1,0 +1,314 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-init-schema
+      author: gennaro
+      changes:
+        # ==== USERS ====
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_hash
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: created_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 0
+
+        # ==== ROLES ====
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: code
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+
+        # ==== USERS_ROLES (junction) ====
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: users_roles
+            columnNames: user_id, role_id
+            constraintName: pk_users_roles
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_users_roles_user
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+            constraintName: fk_users_roles_role
+            onDelete: CASCADE
+
+        # ==== EXERCISES ====
+        - createTable:
+            tableName: exercises
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: body_part
+                  type: VARCHAR(100)
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+              - column:
+                  name: media_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 0
+        - addUniqueConstraint:
+            tableName: exercises
+            columnNames: name, body_part
+            constraintName: uq_exercises_name_bodypart
+
+        # ==== PLANS ====
+        - createTable:
+            tableName: plans
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: title
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: owner_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 0
+        - addForeignKeyConstraint:
+            baseTableName: plans
+            baseColumnNames: owner_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_plans_owner
+            onDelete: SET NULL
+
+        # ==== WORKOUTS ====
+        - createTable:
+            tableName: workouts
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: plan_id
+                  type: BIGINT
+              - column:
+                  name: started_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+              - column:
+                  name: finished_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 0
+        - addForeignKeyConstraint:
+            baseTableName: workouts
+            baseColumnNames: plan_id
+            referencedTableName: plans
+            referencedColumnNames: id
+            constraintName: fk_workouts_plan
+            onDelete: SET NULL
+
+        # ==== WORKOUT_ITEMS ====
+        - createTable:
+            tableName: workout_items
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: workout_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exercise_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sets
+                  type: INT
+                  defaultValueNumeric: 3
+              - column:
+                  name: reps
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: weight
+                  type: "NUMERIC(10,2)"
+              - column:
+                  name: rest_seconds
+                  type: INT
+        - addForeignKeyConstraint:
+            baseTableName: workout_items
+            baseColumnNames: workout_id
+            referencedTableName: workouts
+            referencedColumnNames: id
+            constraintName: fk_workout_items_workout
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: workout_items
+            baseColumnNames: exercise_id
+            referencedTableName: exercises
+            referencedColumnNames: id
+            constraintName: fk_workout_items_exercise
+            onDelete: RESTRICT
+
+        # ==== MEDIA_OBJECT ====
+        - createTable:
+            tableName: media_object
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: object_key
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: mime_type
+                  type: VARCHAR(100)
+              - column:
+                  name: size_bytes
+                  type: BIGINT
+              - column:
+                  name: owner_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: "TIMESTAMP WITH TIME ZONE"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: exercises
+            baseColumnNames: media_id
+            referencedTableName: media_object
+            referencedColumnNames: id
+            constraintName: fk_exercises_media
+            onDelete: SET NULL
+
+        # ==== INDEXES ====
+        - createIndex:
+            tableName: users
+            indexName: idx_users_username
+            columns:
+              - column:
+                  name: username
+        - createIndex:
+            tableName: plans
+            indexName: idx_plans_owner
+            columns:
+              - column:
+                  name: owner_id

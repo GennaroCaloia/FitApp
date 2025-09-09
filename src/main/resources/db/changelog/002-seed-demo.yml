@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-seed-demo
+      author: gennaro
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: code, value: "ADMIN" }
+              - column: { name: description, value: "Administrator" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: code, value: "USER" }
+              - column: { name: description, value: "Standard User" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: username, value: "demo" }
+              - column: { name: email, value: "demo@example.com" }
+              - column: { name: password_hash, value: "$2a$10$9Xo4iATyA7j9kN8H7nYQv.4o9s2yX6r7e1kqVnM2iY6o2OeN3m3mW" } # password: demo
+        - insert:
+            tableName: users_roles
+            columns:
+              - column: { name: user_id, valueComputed: "(select id from users where username='demo')" }
+              - column: { name: role_id, valueComputed: "(select id from roles where code='USER')" }
+        - insert:
+            tableName: exercises
+            columns:
+              - column: { name: name, value: "Push Up" }
+              - column: { name: body_part, value: "Chest" }
+              - column: { name: type, value: "BODYWEIGHT" }
+        - insert:
+            tableName: exercises
+            columns:
+              - column: { name: name, value: "Squat" }
+              - column: { name: body_part, value: "Legs" }
+              - column: { name: type, value: "BODYWEIGHT" }
