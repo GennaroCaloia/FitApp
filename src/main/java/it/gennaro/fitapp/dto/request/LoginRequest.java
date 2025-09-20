@@ -1,4 +1,4 @@
-package it.gennaro.fitapp.dto;
+package it.gennaro.fitapp.dto.request;
 
 public class LoginRequest {
     private String username;

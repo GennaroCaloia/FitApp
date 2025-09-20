@@ -1,4 +1,4 @@
-package it.gennaro.fitapp.dto;
+package it.gennaro.fitapp.dto.response;
 
 import java.time.Instant;
 

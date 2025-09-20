@@ -1,7 +1,7 @@
 package it.gennaro.fitapp.controller;
 
-import it.gennaro.fitapp.dto.LoginRequest;
-import it.gennaro.fitapp.dto.LoginResponse;
+import it.gennaro.fitapp.dto.request.LoginRequest;
+import it.gennaro.fitapp.dto.response.LoginResponse;
 import it.gennaro.fitapp.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
