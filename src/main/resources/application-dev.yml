@@ -1,0 +1,26 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fitapp
+    username: fitapp
+    password: fitapp
+
+minio:
+  endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+  accessKey: ${MINIO_ACCESSKEY:minio}
+  secretKey: ${MINIO_SECRETKEY:minio123}
+  bucket: ${MINIO_BUCKET:fitapp-media}
+
+logging:
+  level:
+    liquibase: INFO
+    org.springframework.jdbc: INFO
+    org.springframework.security: DEBUG
