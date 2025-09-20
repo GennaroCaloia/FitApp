@@ -1,8 +1,8 @@
 package it.gennaro.fitapp.controller;
 
 import it.gennaro.fitapp.dto.ExerciseDto;
-import it.gennaro.fitapp.dto.request.ExerciseCreateRequest;
-import it.gennaro.fitapp.dto.request.ExerciseUpdateRequest;
+import it.gennaro.fitapp.dto.request.exercise.ExerciseCreateRequest;
+import it.gennaro.fitapp.dto.request.exercise.ExerciseUpdateRequest;
 import it.gennaro.fitapp.entity.Exercise;
 import it.gennaro.fitapp.mapper.ExerciseMapper;
 import it.gennaro.fitapp.service.ExerciseService;

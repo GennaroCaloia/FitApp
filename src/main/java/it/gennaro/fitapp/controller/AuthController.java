@@ -1,7 +1,7 @@
 package it.gennaro.fitapp.controller;
 
-import it.gennaro.fitapp.dto.request.LoginRequest;
-import it.gennaro.fitapp.dto.request.RegisterRequest;
+import it.gennaro.fitapp.dto.request.auth.LoginRequest;
+import it.gennaro.fitapp.dto.request.auth.RegisterRequest;
 import it.gennaro.fitapp.dto.response.LoginResponse;
 import it.gennaro.fitapp.security.JwtService;
 import it.gennaro.fitapp.service.UserService;

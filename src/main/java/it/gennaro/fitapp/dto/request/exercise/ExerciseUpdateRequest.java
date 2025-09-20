@@ -1,6 +1,5 @@
-package it.gennaro.fitapp.dto.request;
+package it.gennaro.fitapp.dto.request.exercise;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class ExerciseUpdateRequest {
