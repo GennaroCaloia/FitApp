@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: fitapp
       POSTGRES_PASSWORD: fitapp
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
     healthcheck:
@@ -36,7 +36,6 @@ services:
       timeout: 5s
       retries: 10
 
-  # opzionale: app dentro compose (puoi anche avviare fuori)
   app:
     build: .
     container_name: fitapp-app
@@ -47,6 +46,7 @@ services:
         condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       # DB
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fitapp
       SPRING_DATASOURCE_USERNAME: fitapp
@@ -58,6 +58,7 @@ services:
       MINIO_BUCKET: fitapp-media
     ports:
       - "8080:8080"
+      - "5005:5005" # Porta di debug esposta e mappata
 
 volumes:
   dbdata:
