@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-seed-plans-workouts
+      author: gennaro
+      changes:
+        - insert:
+            tableName: plans
+            columns:
+              - column: { name: title, value: "Full Body 3x" }
+              - column: { name: description, value: "Piano base full body" }
+              - column: { name: owner_id, valueComputed: "(select id from users where username='demo')" }
+        - insert:
+            tableName: workouts
+            columns:
+              - column: { name: plan_id, valueComputed: "(select id from plans where title='Full Body 3x')" }
+              - column: { name: notes, value: "Sessione A" }
+              - column: { name: started_at, value: "2025-01-01T18:00:00Z" }
+              - column: { name: finished_at, value: "2025-01-01T19:00:00Z" }

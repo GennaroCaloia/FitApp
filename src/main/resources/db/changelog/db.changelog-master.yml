@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/001-init-schema.yml
   - include:
       file: db/changelog/002-seed-demo.yml
+  - include:
+     file: db/changelog/003-seed-plans-workouts.yml

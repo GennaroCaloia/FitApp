@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Consumer;
+
 @Service
 public class RoleService {
     private final RoleRepository roleRepository;
@@ -27,7 +29,7 @@ public class RoleService {
     }
 
     @Transactional
-    public Role update(Long id, java.util.function.Consumer<Role> mutator) {
+    public Role update(Long id, Consumer<Role> mutator) {
         var r = roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ruolo non trovato"));
         mutator.accept(r);
         return r;
