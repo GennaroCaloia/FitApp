@@ -9,9 +9,13 @@ spring:
       ddl-auto: validate
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/fitapp
+    url: jdbc:postgresql://localhost:5433/fitapp
     username: fitapp
     password: fitapp
+    hikari:
+      # Imposta il timeout di attesa iniziale del pool (in millisecondi).
+      # Se il DB non risponde entro 30 secondi, l'avvio fallisce.
+      initialization-fail-timeout: 30000
 
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yml
@@ -27,3 +31,12 @@ logging:
     liquibase: INFO
     org.springframework.jdbc: INFO
     org.springframework.security: DEBUG
+
+springdoc:
+  swagger-ui:
+    display-operation-id: true
+    try-it-out-enabled: true
+    filter: true
+    doc-expansion: none
+    tags-sorter: alpha
+    operations-sorter: alpha
