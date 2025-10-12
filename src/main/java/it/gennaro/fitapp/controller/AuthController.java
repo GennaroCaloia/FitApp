@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,14 +44,20 @@ public class AuthController {
     @PostMapping("/register")
     public LoginResponse register(@Valid @RequestBody RegisterRequest req) {
         var user = userService.register(req.username, req.email, req.password);
+
         // Dopo la registrazione, autentichiamo subito l’utente e rilasciamo un token
+        var authorities = user.getRoles().stream()
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getCode()))
+                .toList(); // Restituisce una List<SimpleGrantedAuthority>
+
         var springUser = User
                 .withUsername(user.getUsername())
                 .password(user.getPasswordHash())
-                .authorities((GrantedAuthority) user.getRoles().stream().map(r -> "ROLE_" + r.getCode()).toList())
+                .authorities(authorities)
                 .build();
+
         String token = jwt.generateToken(springUser);
-        return new LoginResponse(token, java.time.Instant.now());
+        return new LoginResponse(token, Instant.now());
     }
 
 
