@@ -52,7 +52,7 @@ public class ExerciseController {
 
     @PatchMapping("/{id}")
     public ExerciseDto updateExercise(@PathVariable Long id, @RequestBody ExerciseUpdateRequest request) {
-        Exercise exerciseToUpdate = exerciseService.update(id, exercise -> exerciseMapper.update(exercise, request));
+        Exercise exerciseToUpdate = exerciseService.update(id, exercise -> exerciseMapper.updateEntityFromRequest(exercise, request));
         return exerciseMapper.toDto(exerciseToUpdate);
     }
 

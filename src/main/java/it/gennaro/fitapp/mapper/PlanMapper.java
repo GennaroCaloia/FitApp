@@ -12,9 +12,21 @@ public interface PlanMapper {
     @Mapping(target = "ownerId", source = "owner.id")
     PlanDto toDto(Plan plan);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "workouts", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "version", ignore = true)
     Plan toEntity(PlanCreateRequest req);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void update(@MappingTarget Plan target, PlanUpdateRequest req);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "workouts", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    void updateEntityFromRequest(@MappingTarget Plan target, PlanUpdateRequest req);
 
 }

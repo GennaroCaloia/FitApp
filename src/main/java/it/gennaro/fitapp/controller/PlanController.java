@@ -49,7 +49,7 @@ public class PlanController {
 
     @PatchMapping("/{id}")
     public PlanDto update(Authentication auth, @PathVariable Long id, @RequestBody PlanUpdateRequest req) {
-        Plan updated = planService.update(auth.getName(), id, p -> planMapper.update(p, req));
+        Plan updated = planService.update(auth.getName(), id, p -> planMapper.updateEntityFromRequest(p, req));
         return planMapper.toDto(updated);
     }
 

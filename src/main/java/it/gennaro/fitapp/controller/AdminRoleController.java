@@ -50,7 +50,7 @@ public class AdminRoleController {
 
     @PatchMapping("/{id}")
     public RoleDto update(@PathVariable Long id, @RequestBody RoleUpdateRequest request) {
-        var updated = roleService.update(id, ruolo -> roleMapper.update(ruolo, request));
+        var updated = roleService.update(id, ruolo -> roleMapper.updateEntityFromRequest(ruolo, request));
         return roleMapper.toDto(updated);
     }
 
