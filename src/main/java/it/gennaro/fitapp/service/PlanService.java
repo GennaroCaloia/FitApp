@@ -5,6 +5,7 @@ import it.gennaro.fitapp.entity.User;
 import it.gennaro.fitapp.repository.PlanRepository;
 import it.gennaro.fitapp.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.function.Consumer;
 
 @Service
+@Profile("dev")
 public class PlanService {
     private final PlanRepository planRepository;
     private final UserRepository userRepository;

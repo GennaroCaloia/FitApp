@@ -6,6 +6,7 @@ import it.gennaro.fitapp.dto.request.user.UserUpdateRequest;
 import it.gennaro.fitapp.mapper.UserMapper;
 import it.gennaro.fitapp.service.AdminUserService;
 import jakarta.validation.Valid;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@Profile("dev")
 @RestController
 @RequestMapping("/api/admin/users")
 @PreAuthorize("hasRole('ADMIN')")

@@ -7,6 +7,7 @@ import it.gennaro.fitapp.repository.PlanRepository;
 import it.gennaro.fitapp.repository.UserRepository;
 import it.gennaro.fitapp.repository.WorkoutRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.time.OffsetDateTime;
 import java.util.function.Consumer;
 
 @Service
+@Profile("dev")
 public class WorkoutService {
     private final WorkoutRepository workoutRepository;
     private final PlanRepository planRepository;

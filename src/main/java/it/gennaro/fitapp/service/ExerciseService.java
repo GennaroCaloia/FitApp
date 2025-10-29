@@ -3,6 +3,7 @@ package it.gennaro.fitapp.service;
 import it.gennaro.fitapp.entity.Exercise;
 import it.gennaro.fitapp.repository.ExerciseRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.function.Consumer;
 
 @Service
+@Profile("dev")
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;

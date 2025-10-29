@@ -7,6 +7,7 @@ import it.gennaro.fitapp.entity.Exercise;
 import it.gennaro.fitapp.mapper.ExerciseMapper;
 import it.gennaro.fitapp.service.ExerciseService;
 import jakarta.validation.Valid;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Profile("dev")
 @RestController
 @RequestMapping("/api/exercises")
 public class ExerciseController {

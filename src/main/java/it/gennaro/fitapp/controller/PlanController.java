@@ -7,6 +7,7 @@ import it.gennaro.fitapp.entity.Plan;
 import it.gennaro.fitapp.mapper.PlanMapper;
 import it.gennaro.fitapp.service.PlanService;
 import jakarta.validation.Valid;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+@Profile("dev")
 @RestController
 @RequestMapping("/api/plans")
 public class PlanController {

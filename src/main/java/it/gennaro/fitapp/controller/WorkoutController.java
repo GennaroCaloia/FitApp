@@ -5,11 +5,13 @@ import it.gennaro.fitapp.dto.request.workout.WorkoutCreateRequest;
 import it.gennaro.fitapp.entity.Workout;
 import it.gennaro.fitapp.mapper.WorkoutMapper;
 import it.gennaro.fitapp.service.WorkoutService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+@Profile("dev")
 @RestController
 @RequestMapping("/api/workouts")
 public class WorkoutController {

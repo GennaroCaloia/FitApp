@@ -4,6 +4,7 @@ import it.gennaro.fitapp.entity.Role;
 import it.gennaro.fitapp.entity.User;
 import it.gennaro.fitapp.repository.RoleRepository;
 import it.gennaro.fitapp.repository.UserRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 
 @Service
+@Profile("dev")
 public class UserService {
 
     private final UserRepository users;
