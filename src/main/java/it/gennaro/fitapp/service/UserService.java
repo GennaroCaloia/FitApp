@@ -4,6 +4,7 @@ import it.gennaro.fitapp.entity.Role;
 import it.gennaro.fitapp.entity.User;
 import it.gennaro.fitapp.repository.RoleRepository;
 import it.gennaro.fitapp.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,12 @@ public class UserService {
         user.getRoles().add(ruoloUtente);
 
         return users.save(user);
+    }
+
+    @Transactional
+    public User loadDomainUserByUsername(String username) {
+        return users.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con username: " + username));
     }
 
 }
