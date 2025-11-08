@@ -86,6 +86,12 @@ Questa sezione elenca i principali endpoint disponibili, raggruppati per funzion
 |--------|-----------|-------------|
 | `GET` | `/api/workouts/latest` | Recupera l’ultimo workout |
 | `GET` | `/api/workouts/{id}` | Dettaglio di un workout specifico |
+### 🧩 Workout nel Plan
+| Metodo | Endpoint | Descrizione |
+|--------|-----------|-------------|
+| `GET`  | `/api/plans/{planId}/workouts`            | Recupera la lista di workout in base all'id del piano |
+| `POST` | `/api/plans/{planId}/workouts/{workoutId}` | Aggiunge workout esistente a un piano                 |
+| `DELETE`| `/api/plans/{planId}/workouts/{workoutId}` | Rimuove workout a un piano                            |
 
 ---
 
