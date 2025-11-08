@@ -1,6 +1,7 @@
 package it.gennaro.fitapp.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "workouts")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Workout {
 
     @Id
