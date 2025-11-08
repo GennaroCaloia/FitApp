@@ -28,4 +28,6 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
             where w.id = :id and p.owner = :owner
             """)
     List<Workout> findDetailByIdAndOwner(@Param("id") Long id, @Param("owner") User owner);
+
+    List<Workout> findByPlanId(Long id);
 }
